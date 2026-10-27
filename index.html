@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>APEX PRIME — Simulateur de course 3D dans le navigateur</title>
+  <meta name="description" content="APEX PRIME : pilotez des Formules 1, des voitures de rallye, des karts et des dragsters en 3D dans votre navigateur. Créez vos circuits et vos voitures." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🏎️</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,600;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#accueil" class="brand" data-nav="accueil" aria-label="APEX PRIME — retour à l'accueil">
+        <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <path d="M4 30 L14 30 L20 20 L10 20 Z" fill="currentColor"/>
+          <path d="M22 30 L30 30 L36 20 L28 20 Z" fill="currentColor" opacity="0.75"/>
+          <path d="M8 36 L44 36 L44 41 L8 41 Z" fill="currentColor"/>
+          <circle cx="15" cy="40" r="4.5" fill="var(--ink-950)" stroke="currentColor" stroke-width="2"/>
+          <circle cx="37" cy="40" r="4.5" fill="var(--ink-950)" stroke="currentColor" stroke-width="2"/>
+        </svg>
+        <span class="brand-name">APEX<em>PRIME</em></span>
+      </a>
+      <nav class="site-nav" aria-label="Navigation principale">
+        <a href="#accueil" data-nav="accueil">Accueil</a>
+        <a href="#courses" data-nav="courses">Courses</a>
+        <a href="#circuits" data-nav="circuits">Circuits</a>
+        <a href="#garage" data-nav="garage">Garage</a>
+      </nav>
+      <a href="#jeu" class="btn btn-primary btn-nav" data-nav="jeu">Jouer</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============ ACCUEIL ============ -->
+    <section class="view" data-view="accueil" aria-label="Accueil">
+      <div class="hero">
+        <div class="hero-canvas-wrap">
+          <canvas id="hero-canvas" aria-hidden="true"></canvas>
+          <div class="hero-fog" aria-hidden="true"></div>
+        </div>
+        <div class="container hero-content">
+          <p class="hero-kicker">Simulateur de course — 100 % navigateur</p>
+          <h1 class="hero-title">La vitesse, <em>dessinée</em> par toi.</h1>
+          <p class="hero-sub">Pilote une Formule 1, une voiture de rallye, un kart ou un dragster en 3D. Dessine tes circuits, peins tes voitures, chasse les chronos. Sans rien installer.</p>
+          <div class="hero-actions">
+            <a href="#courses" class="btn btn-primary">Lancer une course</a>
+            <a href="#circuits" class="btn btn-ghost">Créer un circuit</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="container section">
+        <div class="section-head">
+          <h2 class="section-title">Huit disciplines, huit sensations</h2>
+          <p class="section-sub">Chaque discipline a sa physique, sa voiture et son décor. Choisis ton terrain de jeu.</p>
+        </div>
+        <div class="disc-grid">
+          <a class="disc-card disc-card-f1" href="#courses" data-discipline="f1">
+            <span class="disc-tag">Grand Prix</span>
+            <h3>Formule 1</h3>
+            <p>Adhérence totale, appui aérodynamique et freinage millimétré sur circuit.</p>
+          </a>
+          <a class="disc-card" href="#courses" data-discipline="rally">
+            <span class="disc-tag disc-tag-rally">Terre &amp; gravier</span>
+            <h3>Rallye</h3>
+            <p>Glisse pilotée sur spéciale forestière, le contre-braquage comme arme.</p>
+          </a>
+          <a class="disc-card" href="#courses" data-discipline="drift">
+            <span class="disc-tag disc-tag-purple">Style</span>
+            <h3>Drift</h3>
+            <p>Garde l'angle maximal dans chaque virage pour engranger les points.</p>
+          </a>
+          <a class="disc-card" href="#courses" data-discipline="kart">
+            <span class="disc-tag disc-tag-yellow">Pilote débutant</span>
+            <h3>Karting</h3>
+            <p>Bagarres de kart sur un circuit serré : la porte d'entrée de la course.</p>
+          </a>
+          <a class="disc-card" href="#courses" data-discipline="drag">
+            <span class="disc-tag">402 mètres</span>
+            <h3>Dragster</h3>
+            <p>Ligne droite, régime dans le rouge, passages de vitesse au millimètre.</p>
+          </a>
+          <a class="disc-card" href="#courses" data-discipline="oval">
+            <span class="disc-tag">Pack racing</span>
+            <h3>Ovale</h3>
+            <p>Vitesse pure en drafting, trois de large dans les virages relevés.</p>
+          </a>
+          <a class="disc-card" href="#courses" data-discipline="hill">
+            <span class="disc-tag disc-tag-rally">Dénivelé 80 m</span>
+            <h3>Course de côte</h3>
+            <p>Un col de montagne, un chrono, aucune marge d'erreur.</p>
+          </a>
+          <a class="disc-card" href="#courses" data-discipline="time">
+            <span class="disc-tag disc-tag-purple">Chrono pur</span>
+            <h3>Contre-la-montre</h3>
+            <p>Seul en piste, meilleur tour après meilleur tour, sans trafic.</p>
+          </a>
+        </div>
+      </div>
+
+      <div class="container section">
+        <div class="feature-band">
+          <div class="feature-text">
+            <h2 class="section-title">Dessine le circuit, la 3D fait le reste</h2>
+            <p>Ton tracé devient un circuit 3D complet : asphalte, vibreurs, ligne de départ, arbres et barrières. Règle la largeur de piste, le relief, l'environnement — puis enchaîne directement les tours.</p>
+            <a href="#circuits" class="btn btn-primary">Ouvrir le créateur de circuits</a>
+          </div>
+          <div class="feature-visual">
+            <canvas id="home-editor-canvas" aria-hidden="true"></canvas>
+            <span class="visual-caption">Aperçu : tracé du créateur de circuits</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="container section">
+        <div class="feature-band feature-band-reverse">
+          <div class="feature-text">
+            <h2 class="section-title">Ton garage, ta livrée</h2>
+            <p>Peins la carrosserie, les ailerons et les accents, choisis ton numéro, puis observe ta voiture tourner sur le plateau du garage. La livrée est reprise dans toutes tes courses.</p>
+            <a href="#garage" class="btn btn-ghost">Personnaliser ma voiture</a>
+          </div>
+          <div class="feature-visual feature-visual-dark">
+            <canvas id="home-garage-canvas" aria-hidden="true"></canvas>
+            <span class="visual-caption">Aperçu : plateau tournant du garage</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COURSES ============ -->
+    <section class="view" data-view="courses" aria-label="Courses" hidden>
+      <div class="page-head">
+        <div class="container">
+          <p class="page-kicker">Grille de départ</p>
+          <h1 class="page-title">Choisis ta discipline</h1>
+          <p class="page-lead">Chaque course embarque la voiture dédiée, réglée pour la discipline. Ta livrée du garage est appliquée automatiquement.</p>
+        </div>
+      </div>
+      <div class="container section">
+        <div class="race-options" id="race-options">
+          <div class="race-option">
+            <label for="opt-laps">Nombre de tours</label>
+            <select id="opt-laps">
+              <option value="1">1 tour</option>
+              <option value="3" selected>3 tours</option>
+              <option value="5">5 tours</option>
+            </select>
+          </div>
+          <div class="race-option">
+            <label for="opt-ai">Adversaires</label>
+            <select id="opt-ai">
+              <option value="0">Aucun</option>
+              <option value="3" selected>3 adversaires</option>
+              <option value="5">5 adversaires</option>
+            </select>
+          </div>
+        </div>
+        <div class="race-grid" id="race-grid">
+          <!-- cartes générées en JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ JEU ============ -->
+    <section class="view view-game" data-view="jeu" aria-label="Jeu" hidden>
+      <div class="game-shell" id="game-shell">
+        <div class="game-topbar">
+          <button class="btn btn-ghost btn-small" id="game-quit" aria-label="Quitter la course">Quitter</button>
+          <span class="game-discipline-label" id="game-label">—</span>
+          <button class="btn btn-ghost btn-small" id="game-restart" aria-label="Recommencer la course">Recommencer</button>
+        </div>
+        <div class="game-viewport" id="game-viewport"></div>
+      </div>
+    </section>
+
+    <!-- ============ CIRCUITS (créateur) ============ -->
+    <section class="view" data-view="circuits" aria-label="Créateur de circuits" hidden>
+      <div class="page-head">
+        <div class="container">
+          <p class="page-kicker">Créateur</p>
+          <h1 class="page-title">Dessine ton circuit</h1>
+          <p class="page-lead">Clique pour poser des points de passage : le circuit suit tes points en douceur. Fais glisser les points pour les déplacer, double-clique sur un point pour le supprimer.</p>
+        </div>
+      </div>
+      <div class="container section">
+        <div class="editor-layout">
+          <div class="editor-canvas-wrap">
+            <canvas id="editor-canvas" aria-label="Zone de dessin du circuit"></canvas>
+            <div class="editor-toolbar">
+              <button class="btn btn-ghost btn-small" id="ed-undo">Annuler</button>
+              <button class="btn btn-ghost btn-small" id="ed-clear">Effacer</button>
+              <button class="btn btn-ghost btn-small" id="ed-import">Importer</button>
+              <button class="btn btn-primary btn-small" id="ed-test">Tester en 3D</button>
+            </div>
+          </div>
+          <aside class="editor-panel" aria-label="Réglages du circuit">
+            <div class="panel-block">
+              <label for="ed-name">Nom du circuit</label>
+              <input type="text" id="ed-name" placeholder="Mon circuit" maxlength="32" />
+            </div>
+            <div class="panel-block">
+              <label for="ed-width">Largeur de piste : <output id="ed-width-out">10 m</output></label>
+              <input type="range" id="ed-width" min="6" max="18" value="10" step="1" />
+            </div>
+            <div class="panel-block">
+              <label for="ed-relief">Relief : <output id="ed-relief-out">0 m</output></label>
+              <input type="range" id="ed-relief" min="0" max="14" value="0" step="1" />
+            </div>
+            <div class="panel-block">
+              <label for="ed-theme">Environnement</label>
+              <select id="ed-theme">
+                <option value="gp">Circuit GP (plat, toupie de pins)</option>
+                <option value="forest">Forêt de rallye</option>
+                <option value="mountain">Montagne</option>
+                <option value="desert">Désert</option>
+                <option value="night">Nuit urbaine</option>
+              </select>
+            </div>
+            <div class="panel-block">
+              <span class="panel-label">Type de circuit</span>
+              <div class="segmented" role="group" aria-label="Type de circuit">
+                <button class="seg-btn" id="ed-closed" aria-pressed="true">Boucle fermée</button>
+                <button class="seg-btn" id="ed-open" aria-pressed="false">Point à point</button>
+              </div>
+            </div>
+            <div class="panel-block">
+              <span class="panel-label">Mes circuits</span>
+              <ul class="track-list" id="custom-track-list" role="list"></ul>
+            </div>
+            <div class="panel-block editor-actions">
+              <button class="btn btn-ghost" id="ed-save">Sauvegarder</button>
+              <button class="btn btn-primary" id="ed-race">Course sur ce circuit</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GARAGE ============ -->
+    <section class="view" data-view="garage" aria-label="Garage" hidden>
+      <div class="page-head">
+        <div class="container">
+          <p class="page-kicker">Garage</p>
+          <h1 class="page-title">Crée ta voiture</h1>
+          <p class="page-lead">Choisis un châssis, peins la carrosserie et les accents, fixe ton numéro de course. Ta création te suit dans toutes tes courses.</p>
+        </div>
+      </div>
+      <div class="container section">
+        <div class="garage-layout">
+          <div class="garage-stage-wrap">
+            <canvas id="garage-canvas" aria-label="Vue 3D de la voiture"></canvas>
+            <span class="visual-caption">Fais glisser pour tourner autour de la voiture</span>
+          </div>
+          <aside class="garage-panel" aria-label="Personnalisation">
+            <div class="panel-block">
+              <label for="ga-type">Châssis</label>
+              <select id="ga-type">
+                <option value="f1">Formule 1</option>
+                <option value="rally">Rallye</option>
+                <option value="drift">Drift</option>
+                <option value="kart">Kart</option>
+                <option value="gt">GT Ovale</option>
+                <option value="drag">Dragster</option>
+              </select>
+            </div>
+            <div class="panel-block">
+              <label for="ga-body">Couleur carrosserie</label>
+              <input type="color" id="ga-body" value="#f04e00" />
+            </div>
+            <div class="panel-block">
+              <label for="ga-accent">Couleur accents / ailerons</label>
+              <input type="color" id="ga-accent" value="#6c2bd9" />
+            </div>
+            <div class="panel-block">
+              <label for="ga-number">Numéro</label>
+              <input type="number" id="ga-number" min="1" max="99" value="27" />
+            </div>
+            <div class="panel-block">
+              <span class="panel-label">Livrées prêtes à l'emploi</span>
+              <div class="livery-presets" id="livery-presets"></div>
+            </div>
+            <div class="panel-block editor-actions">
+              <button class="btn btn-primary" id="ga-save">Utiliser cette voiture</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="footer-brand">APEX PRIME</p>
+      <p class="footer-note">Rendu 3D : Three.js — Polices : Chakra Petch &amp; Satoshi — Course arcade, jouable au clavier et au tactile.</p>
+    </div>
+  </footer>
+
+  <input type="file" id="track-file-input" accept=".json,application/json" class="sr-only" aria-hidden="true" />
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.183.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.183.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
